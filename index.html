@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kun Niu · iOS Developer</title>
+<meta name="description" content="Kun Niu, iOS developer (Swift, SwiftUI). Native apps with clean architecture, automated tests, and on-device ML.">
+<meta property="og:title" content="Kun Niu · iOS Developer">
+<meta property="og:description" content="Native iOS apps with clean architecture, automated tests, and on-device ML.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230a66e4'/><text x='50' y='66' font-size='46' text-anchor='middle' fill='white' font-family='-apple-system,Helvetica,Arial' font-weight='700'>KN</text></svg>">
+<style>
+  :root {
+    --bg: #fbfbfd;
+    --surface: #ffffff;
+    --text: #1d1d1f;
+    --muted: #5f6368;
+    --line: #e5e5ea;
+    --accent: #0a66e4;
+    --accent-soft: #e8f0fd;
+    --code-bg: #f2f2f7;
+    --radius: 16px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d0d0f;
+      --surface: #17171a;
+      --text: #f2f2f5;
+      --muted: #a1a1aa;
+      --line: #2a2a30;
+      --accent: #4b93ff;
+      --accent-soft: #15233b;
+      --code-bg: #202026;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: saturate(180%) blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  nav .brand { font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+  nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; font-size: 15px; }
+  nav ul a { color: var(--muted); }
+  nav ul a:hover { color: var(--text); text-decoration: none; }
+  @media (max-width: 600px) { nav ul { gap: 14px; font-size: 14px; } nav ul .hide-sm { display: none; } }
+
+  /* Hero */
+  .hero { padding: 88px 0 64px; }
+  .eyebrow { color: var(--accent); font-weight: 600; font-size: 15px; letter-spacing: 0.02em; margin: 0 0 12px; }
+  h1 { font-size: clamp(40px, 7vw, 64px); line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 20px; }
+  .lede { font-size: clamp(19px, 2.4vw, 22px); color: var(--muted); max-width: 680px; margin: 0 0 28px; }
+  .lede strong { color: var(--text); font-weight: 600; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 20px; border-radius: 999px; font-weight: 600; font-size: 15px;
+    border: 1px solid var(--line); color: var(--text); background: var(--surface);
+  }
+  .btn:hover { text-decoration: none; border-color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn svg { width: 17px; height: 17px; }
+  .meta { color: var(--muted); font-size: 15px; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .meta span::before { content: "• "; color: var(--accent); }
+
+  /* Sections */
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 30px; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .section-sub { color: var(--muted); margin: 0 0 32px; }
+  h3 { font-size: 22px; letter-spacing: -0.01em; margin: 0 0 6px; }
+  h4 { font-size: 15px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 28px 0 10px; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; padding: 0; list-style: none; }
+  .tags li { font-size: 13px; font-weight: 500; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+
+  /* Featured case study */
+  .feature { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 32px; }
+  .feature-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .feature-head .links { display: flex; gap: 16px; font-weight: 600; font-size: 15px; }
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0 8px; }
+  .shot {
+    aspect-ratio: 9 / 19.5; border-radius: 26px; overflow: hidden;
+    border: 1px solid var(--line); background: var(--code-bg);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 13px; text-align: center; padding: 12px;
+  }
+  .shot img, .shot video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 600px) { .shots { grid-template-columns: repeat(3, 1fr); gap: 8px; } .shot { border-radius: 14px; font-size: 11px; } }
+
+  .highlights { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 8px; }
+  @media (max-width: 700px) { .highlights { grid-template-columns: 1fr; } }
+  .hl { border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; background: var(--bg); }
+  .hl strong { display: block; margin-bottom: 4px; }
+  .hl p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 8px 0 0; }
+  @media (max-width: 600px) { .stats { grid-template-columns: 1fr 1fr; } }
+  .stat { border-radius: var(--radius); background: var(--accent-soft); padding: 16px 18px; }
+  .stat b { display: block; font-size: 26px; letter-spacing: -0.02em; color: var(--accent); }
+  .stat span { font-size: 14px; color: var(--muted); }
+
+  /* Architecture diagram */
+  .arch { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 14px; margin-top: 4px; }
+  .arch .node { border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 10px 14px; }
+  .arch .node code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; }
+  .arch .node small { display: block; color: var(--muted); font-size: 12px; }
+  .arch .arrow { color: var(--muted); font-size: 18px; }
+
+  /* Work cards */
+  .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; }
+  .card .role { color: var(--muted); font-size: 14px; margin: 0 0 12px; }
+  .card p { margin: 0 0 10px; font-size: 15.5px; }
+  .card .card-links { margin-top: auto; padding-top: 12px; font-size: 15px; font-weight: 600; display: flex; gap: 16px; }
+
+  /* Experience timeline */
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline li { display: grid; grid-template-columns: 190px 1fr; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .timeline li:last-child { border-bottom: 0; }
+  .timeline .when { color: var(--muted); font-size: 15px; }
+  .timeline .what b { display: block; }
+  .timeline .what span { color: var(--muted); font-size: 15px; }
+  @media (max-width: 600px) { .timeline li { grid-template-columns: 1fr; gap: 2px; } }
+
+  /* About + skills */
+  .about { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; }
+  @media (max-width: 760px) { .about { grid-template-columns: 1fr; gap: 8px; } }
+  .skills dt { font-weight: 600; font-size: 15px; margin-top: 14px; }
+  .skills dt:first-child { margin-top: 0; }
+  .skills dd { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
+
+  /* Contact */
+  .contact { text-align: center; padding: 72px 0; }
+  .contact p { color: var(--muted); max-width: 560px; margin: 0 auto 24px; }
+  .contact .actions { justify-content: center; }
+  footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--muted); font-size: 14px; text-align: center; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">Kun Niu</a>
+    <ul>
+      <li><a href="#project">Project</a></li>
+      <li><a href="#work">Work</a></li>
+      <li class="hide-sm"><a href="#about">About</a></li>
+      <li><a href="resume.pdf">Resume</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="top">
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">iOS Developer · Swift / SwiftUI</p>
+      <h1>Kun Niu</h1>
+      <p class="lede">I build native iOS apps with <strong>clean architecture</strong>, <strong>automated tests</strong>, and <strong>on-device ML</strong>. Two-plus years shipping mobile apps in fintech and agricultural technology, often as the sole iOS developer on the team.</p>
+      <div class="actions">
+        <a class="btn primary" href="resume.pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+          Resume
+        </a>
+        <a class="btn" href="https://github.com/niukun000">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.58.23 2.75.11 3.04.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          GitHub
+        </a>
+        <a class="btn" href="https://www.linkedin.com/in/kun-niu-000">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          LinkedIn
+        </a>
+        <a class="btn" href="mailto:kun000.niu@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          Email
+        </a>
+      </div>
+      <div class="meta">
+        <span>Toronto area (Newmarket, ON)</span>
+        <span>Open to onsite, hybrid, or remote</span>
+        <span>Eligible for US TN status</span>
+        <span>English · Mandarin</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- FEATURED PROJECT -->
+  <section id="project">
+    <div class="wrap">
+      <h2>Featured project</h2>
+      <p class="section-sub">A personal app built the way I'd build production code: tested, profiled, and running CI on every push.</p>
+
+      <article class="feature">
+        <div class="feature-head">
+          <div>
+            <h3>Receipt Scanner</h3>
+            <p class="role" style="color:var(--muted);margin:0">iOS app · 2026</p>
+          </div>
+          <div class="links">
+            <a href="https://github.com/niukun000/ReceiptScanner-iOS">Source code →</a>
+          </div>
+        </div>
+
+        <p>Scan a receipt with the camera, pick one from Photos, or import a PDF. The app reads it with Apple Vision text recognition, pulls out the store, date, items and totals, saves it with SwiftData, and charts spending over time with Swift Charts.</p>
+
+        <!-- Screenshots: upload images to an "images" folder in the repo with these names.
+             For a screen recording, replace an <img> with:
+             <video src="images/receipt-demo.mp4" autoplay muted loop playsinline></video> -->
+        <div class="shots">
+          <div class="shot"><img src="images/receipt-scan.png" alt="Scanning a receipt" onerror="this.replaceWith('Screenshot: scanning')"></div>
+          <div class="shot"><img src="images/receipt-detail.png" alt="Parsed receipt detail" onerror="this.replaceWith('Screenshot: receipt detail')"></div>
+          <div class="shot"><img src="images/receipt-summary.png" alt="Spending summary chart" onerror="this.replaceWith('Screenshot: spending chart')"></div>
+        </div>
+
+        <h4>Architecture</h4>
+        <div class="arch">
+          <div class="node"><code>SwiftUI Views</code><small>camera · history · charts</small></div>
+          <span class="arrow">→</span>
+          <div class="node"><code>@MainActor @Observable</code><small>view model</small></div>
+          <span class="arrow">→</span>
+          <div class="node"><code>ReceiptScanning</code><small>Sendable protocol</small></div>
+          <span class="arrow">→</span>
+          <div class="node"><code>actor Scanner</code><small>Vision OCR + parser</small></div>
+          <span class="arrow">→</span>
+          <div class="node"><code>SwiftData</code><small>persistence</small></div>
+        </div>
+
+        <h4>What's interesting</h4>
+        <div class="highlights">
+          <div class="hl">
+            <strong>Tilted receipts still parse</strong>
+            <p>OCR text is grouped into rows by position and angle, so a crooked photo doesn't scramble item names and prices.</p>
+          </div>
+          <div class="hl">
+            <strong>On-device AI, with a safety check</strong>
+            <p>When items don't add up to the printed subtotal, Apple's on-device Foundation Models suggests moving misplaced prices between lines. A fix is kept only if the re-parsed receipt balances; otherwise the user reviews it.</p>
+          </div>
+          <div class="hl">
+            <strong>Concurrency done properly</strong>
+            <p>Scanning runs in a Swift actor behind a Sendable protocol, and the UI state lives in a @MainActor @Observable view model.</p>
+          </div>
+          <div class="hl">
+            <strong>Testable by design</strong>
+            <p>Dependencies are injected through protocols, so tests swap in fakes. Parser tests run against real receipt scans.</p>
+          </div>
+        </div>
+
+        <h4>Quality</h4>
+        <div class="stats">
+          <div class="stat"><b>34</b><span>XCTest unit tests</span></div>
+          <div class="stat"><b>CI</b><span>GitHub Actions on every push and PR</span></div>
+          <div class="stat"><b>31 ms → ~0</b><span>date extraction after profiling</span></div>
+        </div>
+        <p style="color:var(--muted);font-size:15px;margin:16px 0 0">XCUITest flows cover scanning, history, detail, delete, and spending summaries using seeded test data, plus a contrast accessibility audit. Instruments Time Profiler showed the date detector and regexes were rebuilt on every call; caching them cut date extraction from 31 ms to below the profiler's threshold, so the whole parser now costs less than that one lookup did.</p>
+
+        <ul class="tags">
+          <li>SwiftUI</li><li>Swift Concurrency</li><li>Vision</li><li>SwiftData</li><li>Swift Charts</li><li>Foundation Models</li><li>XCTest</li><li>XCUITest</li><li>GitHub Actions</li><li>Instruments</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- PROFESSIONAL WORK -->
+  <section id="work">
+    <div class="wrap">
+      <h2>Professional work</h2>
+      <p class="section-sub">Apps I built for clients and employers.</p>
+
+      <div class="cards">
+        <article class="card">
+          <h3>AYODana loan app</h3>
+          <p class="role">iOS Developer (Contract) · Qiancheng Tech · Fintech</p>
+          <p>Sole iOS developer on a bilingual English/Indonesian SwiftUI loan app, built from provided designs through client handoff.</p>
+          <p>Built SMS-code login, identity verification with ID photo upload, loan offers, and order history. Stored sessions in Keychain, wrote a generic Alamofire networking layer, added a WKWebView JavaScript-to-native bridge, and implemented jailbreak/VPN/proxy risk checks.</p>
+          <ul class="tags"><li>SwiftUI</li><li>MVVM</li><li>Keychain</li><li>WKWebView</li><li>Alamofire</li></ul>
+        </article>
+
+        <article class="card">
+          <h3>Crop Yield – Canada</h3>
+          <p class="role">Mobile App Developer · Super GeoAI Technology · AgTech</p>
+          <p>Built the native SwiftUI prototype of this crop-assessment app for crop adjusters: camera workflow, file management, and on-device TensorFlow Lite object detection, with bounding boxes mapped back onto the original photo in a pinch-to-zoom view.</p>
+          <p>When the team moved to Flutter for the published app, integrated TensorFlow Lite and built the camera, files, and detection labels.</p>
+          <ul class="tags"><li>SwiftUI</li><li>TensorFlow Lite</li><li>Flutter</li><li>Camera</li></ul>
+          <!-- Add the real App Store link here -->
+          <div class="card-links"><a href="#">App Store →</a></div>
+        </article>
+
+        <article class="card">
+          <h3>LLD Map</h3>
+          <p class="role">Mobile App Developer · Super GeoAI Technology · AgTech</p>
+          <p>Built the user interface, camera, and file management for an App Store app that finds Canadian land parcels by Legal Land Description and draws their boundaries on the map.</p>
+          <ul class="tags"><li>iOS</li><li>Maps</li><li>Camera</li><li>Files</li></ul>
+          <!-- Add the real App Store link here -->
+          <div class="card-links"><a href="#">App Store →</a></div>
+        </article>
+
+        <article class="card">
+          <h3>LiDAR grain-bin scanner</h3>
+          <p class="role">Android · Super GeoAI Technology</p>
+          <p>Built an OpenGL ES 2.0 point-cloud viewer with custom shaders, touch rotation and pinch-to-zoom, plus MQTT scan controls and Jetpack Compose screens to organize scans by field and bin.</p>
+          <ul class="tags"><li>Kotlin</li><li>OpenGL ES</li><li>Jetpack Compose</li><li>MQTT</li></ul>
+        </article>
+      </div>
+
+      <h4 style="margin-top:44px">Experience</h4>
+      <ul class="timeline">
+        <li>
+          <div class="when">Feb 2025 to Dec 2025<br>Sep 2023 to Jun 2024</div>
+          <div class="what"><b>Mobile App Developer</b><span>Super GeoAI Technology Inc. · Saskatoon, SK</span></div>
+        </li>
+        <li>
+          <div class="when">Aug 2024 to Dec 2024</div>
+          <div class="what"><b>iOS Developer (Contract)</b><span>Qiancheng Tech, AYODana fintech project · Remote</span></div>
+        </li>
+        <li>
+          <div class="when">Oct 2022 to Mar 2023</div>
+          <div class="what"><b>iOS Development Training Program</b><span>Enhance IT · Atlanta, GA</span></div>
+        </li>
+        <li>
+          <div class="when">2017 to 2021</div>
+          <div class="what"><b>B.Sc. in Computer Science</b><span>University of Saskatchewan</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap about">
+      <div>
+        <h2>About</h2>
+        <p>I'm an iOS developer in the Toronto area. I like owning an app end to end: turning designs into SwiftUI, structuring code so it's easy to test, and digging into Instruments when something feels slow.</p>
+        <p>Much of my work has been as the only iOS developer on a team, which taught me to make sensible architecture calls on my own and leave code that the next person can pick up. I'm fluent in English and a native Mandarin speaker.</p>
+      </div>
+      <dl class="skills">
+        <dt>iOS</dt>
+        <dd>Swift, SwiftUI, UIKit, Swift Concurrency (async/await, actors), Observation, Combine, SwiftData, Core Data, Vision, Swift Charts, Foundation Models, WKWebView</dd>
+        <dt>Architecture &amp; testing</dt>
+        <dd>MVVM, protocol-oriented design with dependency injection, XCTest, XCUITest, Swift Package Manager, GitHub Actions, Instruments</dd>
+        <dt>Networking &amp; security</dt>
+        <dd>REST APIs, Alamofire, Keychain, Network framework, App Tracking Transparency, device-risk checks</dd>
+        <dt>Also</dt>
+        <dd>Flutter / Dart, Kotlin (Android), TensorFlow Lite, Python, SQL, Git, Agile/Scrum</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="wrap">
+      <h2>Let's talk</h2>
+      <p>I'm looking for iOS roles where testing and craft matter. The fastest way to reach me is email.</p>
+      <div class="actions">
+        <a class="btn primary" href="mailto:kun000.niu@gmail.com">kun000.niu@gmail.com</a>
+        <a class="btn" href="resume.pdf">Download resume</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="y">2026</span> Kun Niu</div>
+</footer>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
